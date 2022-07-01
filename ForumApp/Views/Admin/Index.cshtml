@@ -1,0 +1,34 @@
+﻿
+@model IEnumerable<ForumApp.ViewModels.ForumSectionViewModel>
+
+<h2>Sections</h2>
+
+<hr></hr>
+
+
+@if(!Model.Any()) {
+	<div class="alert alert-info">
+		No forum sections for now
+	</div>
+}
+
+<div class="list-group">
+	@foreach (var item in Model)
+   {
+	   <div class="list-group-item d-flex justify-content-between">
+			<a asp-controller="Topic" asp-action="Index" asp-route-id="@item.Id">@item.Name</a>
+			@if(item.Moderator != null){<span class="px-5">Moderator: @item.Moderator.UserName</span>}
+			@if (item.Moderator == null)
+			{
+				<span class="px-5">Moderator: Unassigned</span>
+			}
+
+				<div class="btn-group" role="group">
+					<a asp-controller="Admin" asp-action="Edit" asp-route-id="@item.Id">
+						<button class="btn btn-primary">Edit</button>
+					</a>
+				</div>	
+			
+	   </div>
+   }
+</div>

@@ -1,0 +1,19 @@
+﻿@model ForumApp.ViewModels.ForumSectionEditViewModel
+<div class="list-group-item d-flex justify-content-between">
+<h2>@Model.Name</h2>
+<a asp-controller="Admin" asp-action="Index"><button class="btn btn-danger my-3">Back</button></a>
+</div>
+
+
+<form asp-action="Edit" asp-controller="Admin" method="POST" asp-route-id="@Model.Id">
+	<label asp-for="ModeratorEmail"></label>
+	<select class="form-control" asp-for="ModeratorEmail" multiple="multiple">
+		@foreach (var item in ViewBag.Moderators)
+		{
+			<option value="@item.UserName">@item.UserName</option>
+		}
+		</select>
+
+	@Html.ValidationSummary()
+	<button type="submit" class="btn btn-success">Save changes</button>
+</form>

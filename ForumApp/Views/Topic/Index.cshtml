@@ -1,0 +1,32 @@
+﻿@model ForumApp.ViewModels.ForumSectionViewModel
+
+<h2>Topics</h2>
+
+<hr></hr>
+
+<div  class="list-group-item d-flex justify-content-between">
+	<a asp-controller="Topic" asp-action="Create" asp-route-id="@Model.Id"><button class="btn btn-success my-3">Add topic</button></a>
+	<a asp-controller="ForumSection" asp-action="Index" asp-route-id="@Model.Id"><button class="btn btn-danger my-3">Back</button></a>
+</div>
+
+@if(!Model.Topics.Any()) {
+	<div class="alert alert-info">
+		No messages for now
+	</div>
+}
+
+<div class="list-group">
+	@foreach (var item in Model.Topics)
+   {
+	   <div class="list-group-item d-flex justify-content-between">
+			<a asp-controller="Message" asp-action="Index" asp-route-id="@item.Id">@item.Name</a>
+			<span class="px-3">@item.Description</span>
+			@if(ViewBag.UserName == item.Creator.UserName || ViewBag.IsAdmin || (Model.Moderator != null && Model.Moderator.UserName == ViewBag.UserName)){
+				<div>
+					<a asp-controller="Topic" asp-action="Edit" asp-route-id="@item.Id"><button class="btn btn-primary">Edit</button></a>
+					<a asp-controller="Topic" asp-action="Delete" asp-route-id="@item.Id"><button class="btn btn-danger">Delete</button></a>
+				</div>
+			}
+	   </div>
+   }
+</div>

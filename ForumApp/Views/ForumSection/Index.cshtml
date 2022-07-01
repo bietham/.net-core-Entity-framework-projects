@@ -1,0 +1,40 @@
+﻿@using ForumApp.Store.Roles
+@model IEnumerable<ForumApp.ViewModels.ForumSectionViewModel>
+
+<h2>Sections</h2>
+
+<hr></hr>
+
+
+@if(ViewBag.IsAdmin){
+	<div class="btn-group" role="group">
+		<a asp-controller="ForumSection" asp-action="Create"  role="button"><button class="btn btn-success my-3">Add section</button></a>
+	</div>
+}
+
+
+@if(!Model.Any()) {
+	<div class="alert alert-info">
+		No forum sections for now
+	</div>
+}
+
+<div class="list-group">
+	@foreach (var item in Model)
+   {
+	   <div class="list-group-item d-flex justify-content-between">
+			<a asp-controller="Topic" asp-action="Index" asp-route-id="@item.Id">@item.Name</a>
+			<span class="px-5">@item.Description</span>
+			@if (ViewBag.IsAdmin || (item.Moderator != null && ViewBag.UserName == item.Moderator.UserName)){
+				<div class="btn-group" role="group">
+					<a asp-controller="ForumSection" asp-action="Edit" asp-route-id="@item.Id">
+						<button class="btn btn-primary">Edit</button>
+					</a>
+					<a asp-controller="ForumSection" asp-action="Delete" asp-route-id="@item.Id">
+						<button class="btn btn-danger">Delete</button>
+					</a>
+				</div>	
+			}
+	   </div>
+   }
+</div>

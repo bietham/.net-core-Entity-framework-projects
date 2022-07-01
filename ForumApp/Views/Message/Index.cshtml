@@ -1,0 +1,51 @@
+﻿@model ForumApp.ViewModels.TopicViewModel
+
+<h2>@Model.Name</h2>
+
+<hr></hr>
+
+<div  class="list-group-item d-flex justify-content-between">
+<a asp-controller="Message" asp-action="Create" asp-route-id="@Model.Id"><button class="btn btn-success my-3">Add message</button></a>
+<a asp-controller="Topic" asp-action="Index" asp-route-id="@Model.ForumSectionId"><button class="btn btn-danger my-3">Back</button></a>
+</div>
+
+@if(!Model.Messages.Any()) {
+	<div class="alert alert-info">
+		No messages for now
+	</div>
+}
+
+<div class="list-group">
+	@foreach (var item in Model.Messages)
+   {<div class="list-group-item d-flex flex-column">
+	   <div class="list-group-item d-flex flex-column">
+			<div class="text-secondary">
+				@(item.Modified == new DateTime() ? $"Created {@item.CreatedAt}" : $"Created {@item.CreatedAt}, (Modified {@item.Modified})")
+			</div>
+			<div class="my-3">
+				@item.Text
+			</div>
+			<div>
+					@if (ViewBag.UserName == item.Creator.UserName || ViewBag.IsAdmin || (Model.Moderator != null && Model.Moderator.UserName == ViewBag.UserName))
+					{
+						<a asp-controller="Message" asp-action="Edit" asp-route-id="@item.Id"><button class="btn btn-primary">Edit</button></a>
+						<a asp-controller="Message" asp-action="Delete" asp-route-id="@item.Id"><button class="btn btn-danger">Delete</button></a>
+					}
+			</div>	
+			
+	   </div>
+	   @if (!((item.Attachments != null) && (!item.Attachments.Any())))
+            {
+            <div class="d-flex flex-column col-md-12 gap-3 justify-content-between">
+                @foreach (var attachment in item.Attachments)
+                {
+                <div class="d-flex col-md-12">
+					<img class="card-img-top" src="~/@attachment.FilePath" alt="@attachment.FileName" />
+                </div>
+                }
+            </div>
+            }
+	</div>
+
+   }
+</div>

@@ -1,0 +1,13 @@
+﻿@model ForumApp.ViewModels.ForumSectionCreateViewModel
+
+<form asp-controller="ForumSection" asp-action="Create" method="POST">
+	<label asp-for="Name"></label>
+	<input asp-for="Name" type="text" class="form-control"/>
+
+	<label asp-for="Description"></label>
+    <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+
+	@Html.ValidationSummary()
+
+	<button type="submit" class="btn btn-success">Add</button>
+</form>

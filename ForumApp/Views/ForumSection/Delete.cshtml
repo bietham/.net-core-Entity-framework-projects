@@ -1,0 +1,12 @@
+﻿@model ForumApp.ViewModels.ForumSectionViewModel
+
+<p>Are you sure that you want to delete <b>@Model.Name</b> forum section?</p>
+
+<form asp-controller="ForumSection" asp-action="Delete" asp-route-id=@Model.Id method="POST">
+    <button class="btn btn-danger" type="submit" >Yes</button>
+</form>
+
+<form asp-controller="ForumSection" asp-action="Index">
+    <button class="btn btn-light" type="submit">No</button>
+</form>
+   

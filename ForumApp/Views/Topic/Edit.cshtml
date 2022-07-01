@@ -1,0 +1,17 @@
+﻿@model ForumApp.ViewModels.TopicEditViewModel
+
+<form asp-controller="Topic" asp-action="Edit" method="post">
+	<input type="hidden" asp-for="ForumSectionId" value="@ViewBag.ForumSectionId"></input>
+	<label asp-for="Name"></label>
+	<input type="text" asp-for="Name" class="form-control"/>
+	<span asp-validation-for="Name"></span>
+
+	<label asp-for="Description"></label>
+	<textarea asp-for="Description" class="form-control"></textarea>
+	<span asp-validation-for="Description"></span>
+
+	@Html.ValidationSummary()
+
+	<button type="submit" class="btn btn-success">Save changes</button>
+</form>
+

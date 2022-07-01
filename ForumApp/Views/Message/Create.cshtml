@@ -1,0 +1,17 @@
+﻿@model ForumApp.ViewModels.MessageCreateViewModel
+
+<form asp-controller="Message" asp-action="Create" method="POST"  enctype="multipart/form-data">
+	<input type="hidden" asp-for="TopicId" value="@ViewBag.TopicId"></input>
+
+	<label asp-for="Text"></label>
+    <textarea asp-for="Text" class="form-control" rows="3"></textarea>
+	<div class="form-group">
+        <label asp-for="Attachments"></label>
+        <input asp-for="Attachments" type="file" multiple="multiple" class="form-control-file" />
+        <span class="text-danger" asp-validation-for="Attachments"></span>
+    </div>
+
+	@Html.ValidationSummary()
+
+	<button type="submit" class="btn btn-success">Post</button>
+</form>
